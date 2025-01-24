@@ -1,5 +1,10 @@
 # MovieRaterApi
+to run this app, first run
+''python3 manage.py migrate''
+and run 
+''python3 manage.py runserver ''
 
+in the terminal 
 
-## api
-this is the backend of the movie rating app, develop with django
+## Backend
+the api directoryis backend of the movie rating app, developed with django
