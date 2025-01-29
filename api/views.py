@@ -4,14 +4,21 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework.response import  Response
 from .models import Movie, Rating
-from .serializers import MovieSerializer, RatingSerializer
+from .serializers import MovieSerializer, RatingSerializer, UserSerializer
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = (UserSerializer)
+    
 
 # Create your views here.
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = (MovieSerializer)
     authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)#IsAuthenticated,
     
     # self-define method 
     @action(detail=True, methods=['POST']) #tell the frame work what method this will be
@@ -42,8 +49,20 @@ class MovieViewSet(viewsets.ModelViewSet):
         else:
             response = {'message':"you need to provide your rating on a movie!"}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        
+   
 
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = (RatingSerializer)
     authentication_classes = (TokenAuthentication,)
+    
+     # disabling the default rest_framework method of create and update method here
+    def update(self, request, *args, **kwargs):
+        response = {'message':"You can not update rating like this"}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        
+    
+    def create(self, request, *args, **kwargs):
+        response = {'message':"You can not create rating like this"}
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)
