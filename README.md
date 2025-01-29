@@ -13,4 +13,8 @@ Built a full-stack movie rating application during winter vacation to enhance sk
 * Development Tools: Tested and validated API endpoints with Postman to ensure reliability and security.
 
 ## How to run 
+first of all, I set up a virtual environment called `venv` for the app, so run
+`source venv/bin/activate` to activate the virtual environment
+to run the django, run 
 `python3 manage.py runserver`
+in the terminal
